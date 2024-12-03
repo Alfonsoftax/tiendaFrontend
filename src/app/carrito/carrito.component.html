@@ -1,0 +1,23 @@
+  
+  
+
+<h2>Lista productos del carrito</h2>
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th>Posicion</th>
+      <th>Nombre Producto</th>
+      <th>Precio</th>
+    
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor= "let producto of producto">
+      <td>{{producto.id}}</td>
+      <td>{{producto.descripcion_producto}}</td>
+      <td>{{producto.precio}}€</td>
+      <td>
+        
+    </tr>
+  </tbody>
+</table>

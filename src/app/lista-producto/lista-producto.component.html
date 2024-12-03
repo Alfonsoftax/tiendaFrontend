@@ -1,0 +1,22 @@
+<h1>{{cliente?.nombre}}</h1>
+<h2>Lista productos</h2>
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th>Posicion</th>
+      <th>Nombre Producto</th>
+      <th>Precio</th>
+    
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor= "let producto of producto">
+      <td>{{producto.id}}</td>
+      <td>{{producto.descripcion_producto}}</td>
+      <td>{{producto.precio}}€</td>
+      <td>
+        <button (click)= "actualizarProducto(producto.id)" class="btn btn-success">Añadir al carrito</button>
+      
+    </tr>
+  </tbody>
+</table>
