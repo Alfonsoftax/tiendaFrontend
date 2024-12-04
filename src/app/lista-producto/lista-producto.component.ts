@@ -16,23 +16,13 @@ import { Clientes } from '../cliente';
 export class ListaProductoComponent {
 
   producto: Producto[];
-  cliente:Clientes;
   constructor(private tiendaServicio: TiendaService, private router: Router) { }
 
   ngOnInit(): void {
     this.obtenerProducto();
     
-  this.obtenerCliente();
 }
-  private obtenerCliente() {
-    this.tiendaServicio.obtenerCliente().subscribe(dato2 => {
-      this.cliente = dato2;
-    });
-  }
 
-  actualizarProducto(id: number) {
-    this.router.navigate(['actualizar-producto', id]);
-  }
 
   private obtenerProducto() {
     this.tiendaServicio.obtenerListaDeProductos().subscribe(dato => {
@@ -40,37 +30,15 @@ export class ListaProductoComponent {
     });
   }
 
-  eliminarProducto(id: number) {
-    Swal.fire({
-      title: '¿Estás seguro?',
-      text: "Confirma si deseas eliminar al empleado",
-      icon: 'warning', // Cambiado 'type' a 'icon'
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, elimínalo',
-      cancelButtonText: 'No, cancelar',
-      buttonsStyling: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.tiendaServicio.eliminarProducto(id).subscribe(dato => {
-          console.log(dato);
-          this.obtenerProducto();
-          Swal.fire(
-            'Empleado eliminado',
-            'El empleado ha sido eliminado con exito',
-            'success'
-          )
-        })
+  aniadirCarrito(idProducto:number) {
+    this.tiendaServicio.aniadirCarrito(idProducto).subscribe({
+      next: () => {
+        console.log('Producto añadido al carrito');
+      },
+      error: (err) => {
+        console.error('Error al añadir el producto al carrito', err);
       }
     });
-
-
-  }
-
-
-  verDetallesDelProducto(id: number) {
-    this.router.navigate(['producto-detalles', id]);
   }
 
 }

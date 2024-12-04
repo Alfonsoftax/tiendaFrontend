@@ -8,6 +8,12 @@ import { Clientes } from './cliente';
   providedIn: 'root'
 })
 export class TiendaService {
+  eliminarCarrito(idProducto: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.baseURL}/eliminarCarrito/${idProducto}`);
+  }
+
+  private baseURL = "http://localhost:8082/api/v1/tienda";
+
   obtenerCarrito() {
     return this.httpClient.get<Producto[]>(`${this.baseURL}/obtenerCarrito`);
   }
@@ -15,31 +21,18 @@ export class TiendaService {
     return this.httpClient.get<Clientes>(`${this.baseURL}/obtenerCliente`);
   }
 
-  private baseURL = "http://localhost:8082/api/v1/tienda";
+  aniadirCarrito(idProducto: number): Observable<void> {
+    return this.httpClient.post<void>(`${this.baseURL}/aniadirCarrito/${idProducto}`, null);
+  }
+
+  pagar(): Observable<number> {
+    return this.httpClient.delete<number>(`${this.baseURL}/pagar`);
+  }
 
   constructor(private httpClient: HttpClient) { }
 
-  //este metodo nos sirve para obtener los empleados
   obtenerListaDeProductos(): Observable<Producto[]> {
     return this.httpClient.get<Producto[]>(`${this.baseURL}`);
   }
 
-  //este metodo nos sirve para registrar un empleado
-  registrarProducto(producto: Producto): Observable<Object> {
-    return this.httpClient.post(`${this.baseURL}`, producto);
-  }
-
-  //este metodo sirve para actualizar el empleado
-  actualizarProducto(id: number, producto: Producto): Observable<Object> {
-    return this.httpClient.put(`${this.baseURL}/${id}`, producto);
-  }
-
-  //este metodo sirve para obtener o buscar un empleado
-  obtenerProductoPorId(id: number): Observable<Producto> {
-    return this.httpClient.get<Producto>(`${this.baseURL}/${id}`);
-  }
-
-  eliminarProducto(id: number): Observable<Object> {
-    return this.httpClient.delete(`${this.baseURL}/${id}`);
-  }
 }

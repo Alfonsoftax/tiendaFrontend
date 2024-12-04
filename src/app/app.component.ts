@@ -12,11 +12,16 @@ import { Clientes } from './cliente';
   styleUrl: './app.component.css'
 })
 export class AppComponent  implements OnInit {
-  
+  cliente:Clientes;
+
   ngOnInit(): void {
-   
+    this.obtenerCliente();
   } 
   title = 'tienda online';
   constructor(private tiendaServicio: TiendaService) { }
- 
+  private obtenerCliente() {
+    this.tiendaServicio.obtenerCliente().subscribe(dato => {
+      this.cliente = dato;
+    });
+  }
 }

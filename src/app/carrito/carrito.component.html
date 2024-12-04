@@ -1,23 +1,34 @@
-  
-  
+<h2 class="text-center text-primary mt-5 mb-4">Lista de Productos en el Carrito</h2>
 
-<h2>Lista productos del carrito</h2>
-<table class="table table-striped">
+<table class="table table-striped table-hover table-bordered">
   <thead class="table-dark">
     <tr>
-      <th>Posicion</th>
+      <th>Posición</th>
       <th>Nombre Producto</th>
       <th>Precio</th>
-    
+      <th>Acción</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor= "let producto of producto">
+    <tr *ngFor="let producto of producto">
       <td>{{producto.id}}</td>
       <td>{{producto.descripcion_producto}}</td>
       <td>{{producto.precio}}€</td>
       <td>
-        
+        <button (click)="eliminarCarrito(producto.id)" class="btn btn-danger btn-sm">Eliminar del carrito</button>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2"></td>
+      <td class="fw-bold text-end">Total: {{total}} €</td>
+    </tr>
+
+    <tr>
+      <td colspan="3" class="text-center">
+        <button (click)="pagar()" [disabled]="this.producto?.length === 0" class="btn btn-success btn-lg">
+          Pagar
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>
