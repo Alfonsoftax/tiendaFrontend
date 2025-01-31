@@ -1,9 +1,9 @@
-export class Clientes{
+export class Historial{
 
     id:number;
     nombre:string;
     apellido:string;
     email:string;
-    password:string;
+    precioTotal:string;
     
 }

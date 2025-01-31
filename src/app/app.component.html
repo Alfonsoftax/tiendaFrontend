@@ -1,18 +1,27 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
   <div class="container">
-    <a class="navbar-brand" href="#">Tienda Online</a>
+    <a class="navbar-brand">Tienda Online</a>
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
+      <ul class="navbar-nav ms-auto" *ngIf="isLoggedIn">
         <li class="nav-item">
           <a routerLink="producto" routerLinkActive="active" class="nav-link">Lista de productos</a>
         </li>
         <li class="nav-item">
           <a routerLink="carrito" routerLinkActive="active" class="nav-link">Carrito</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="historial" routerLinkActive="active" class="nav-link">Historial de pedidos</a>
+        </li>
+        <li class="nav-item" style="margin-left: 200px;">
+          <a routerLink="registro" routerLinkActive="active" class="nav-link">Editar Perfil</a>
+        </li>
+        <li class="nav-item ms-auto">
+          <a (click)="cerrarSesion()" class="nav-link" style="cursor: pointer;">Cerrar Sesión</a>
         </li>
       </ul>
     </div>
@@ -21,10 +30,9 @@
 
 <div class="container mt-4 text-center">
   <h1 class="display-4 text-primary">{{title}}</h1>
-  <p class="lead text-muted">Bienvenido a nuestra tienda online <strong>{{cliente?.nombre}}</strong>. ¡Compra productos increíbles ahora!</p>
+  <p class="lead text-muted" *ngIf="isLoggedIn">Bienvenido a nuestra tienda online <strong>{{cliente?.nombre}}</strong>. ¡Compra productos increíbles ahora!</p>
 </div>
 
 <div class="container mt-5">
   <router-outlet></router-outlet>
 </div>
-

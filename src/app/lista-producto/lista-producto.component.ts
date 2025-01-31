@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { Clientes } from '../cliente';
+import { ClienteService } from '../cliente.service';
 
 @Component({
   selector: 'app-lista-producto',
@@ -16,11 +17,14 @@ import { Clientes } from '../cliente';
 export class ListaProductoComponent {
 
   producto: Producto[];
-  constructor(private tiendaServicio: TiendaService, private router: Router) { }
+  cliente: Clientes;
+
+  constructor(private tiendaServicio: TiendaService, private router: Router, private clienteService: ClienteService) { }
 
   ngOnInit(): void {
     this.obtenerProducto();
-    
+    this.cliente = this.clienteService.getCliente();
+
 }
 
 
@@ -31,7 +35,7 @@ export class ListaProductoComponent {
   }
 
   aniadirCarrito(idProducto:number) {
-    this.tiendaServicio.aniadirCarrito(idProducto).subscribe({
+    this.tiendaServicio.aniadirCarrito(idProducto,this.cliente.id).subscribe({
       next: () => {
         console.log('Producto añadido al carrito');
       },

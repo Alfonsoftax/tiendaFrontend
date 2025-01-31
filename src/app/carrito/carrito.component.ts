@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { catchError, tap, throwError } from 'rxjs';
 import { FormsModule, NgModel } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ClienteService } from '../cliente.service';
 
 @Component({
   selector: 'app-carrito',
@@ -18,13 +19,16 @@ export class CarritoComponent {
 
   producto: Producto[];
   total:number = 0;
-  constructor(private tiendaServicio:TiendaService, private router: Router) { }
+  cliente: any;
+
+  constructor(private tiendaServicio:TiendaService, private router: Router, private clienteService: ClienteService) { }
 
   ngOnInit(): void {
+    this.cliente = this.clienteService.getCliente();
     this.obtenerCarrito();
   }
   private obtenerCarrito() {
-    this.tiendaServicio.obtenerCarrito().subscribe(dato => {
+    this.tiendaServicio.obtenerCarrito(this.cliente.id).subscribe(dato => {
       this.producto = dato;
       this.total = this.producto.reduce((acumulador, producto) => {
         return acumulador + producto.precio;
@@ -33,7 +37,7 @@ export class CarritoComponent {
   }
 
   pagar() {
-    this.tiendaServicio.pagar().subscribe(dato => {
+    this.tiendaServicio.pagar(this.cliente, this.producto, this.total).subscribe(dato => {
       if (dato != null) {
         Swal.fire({
           title: 'Pago realizado',
@@ -42,14 +46,14 @@ export class CarritoComponent {
           confirmButtonText: 'OK'
         }).then(() => {
 
-          location.reload();
+          this.obtenerCarrito();
         });
       }
     });
   }
 
   eliminarCarrito(idProducto:number) {
-    this.tiendaServicio.eliminarCarrito(idProducto).subscribe({
+    this.tiendaServicio.eliminarCarrito(idProducto, this.cliente.id).subscribe({
       next: () => {
         Swal.fire({
           title: 'Producto Eliminado',
@@ -57,7 +61,7 @@ export class CarritoComponent {
           icon: 'success',
           confirmButtonText: 'OK'
         }).then(() => {
-          location.reload();
+          this.obtenerCarrito();
         });
       },
       error: (err) => {
