@@ -23,13 +23,14 @@
           <label for="password">Contraseña</label>
           <input type="password" class="form-control" id="password" [(ngModel)]="cliente.password" name="password" placeholder="Ingrese su contraseña" required>
         </div>
-        <div *ngIf="!isLogged()">
-          <button type="submit" class="btn btn-primary btn-block mt-4">Registrarse</button>
-          <button (click)="volver()" class="btn btn-secondary btn-block mt-4">Volver</button>  
-        </div>
-        <div *ngIf="isLogged()">
+        <div *ngIf="isLogged(); else notLogged">
           <button type="submit" class="btn btn-primary btn-block mt-4">Actualizar Usuario</button>
         </div>
+        
+        <ng-template #notLogged>
+          <button type="submit" class="btn btn-primary btn-block mt-4">Registrarse</button>
+          <button (click)="volver()" class="btn btn-secondary btn-block mt-4">Volver</button>  
+        </ng-template>
       </form>
     </div>
   </div>

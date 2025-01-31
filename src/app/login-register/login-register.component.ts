@@ -23,8 +23,9 @@ volver() {
   cliente: Clientes = new Clientes();
   ngOnInit(): void {
     this.cliente = this.clienteService.getCliente();
-    console.log(this.appComponent.isLoggedIn);
-
+    if(this.cliente == null) {
+      this.cliente = new Clientes();
+    }
 }
   constructor(private loginService: LoginService, private router: Router, private clienteService: ClienteService, private appComponent: AppComponent) {}
 
